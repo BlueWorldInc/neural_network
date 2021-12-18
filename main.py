@@ -22,6 +22,6 @@ class neuralNetwork:
 inputNodes = 3
 hiddenNodes = 3
 outputNodes = 3
-learningRate = 0.5
+learningRate = 0.4
 
 n = neuralNetwork(inputNodes, hiddenNodes, outputNodes, learningRate)
