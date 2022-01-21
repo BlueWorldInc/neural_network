@@ -49,50 +49,71 @@ class neuralNetwork:
 		hidden_outputs = self.activation_function(hidden_inputs)
 		final_inputs = numpy.dot(self.who, hidden_outputs)
 		final_outputs = self.activation_function(final_inputs)
-		pass
+
+		return final_outputs
+
+#Init
 
 inputNodes = 784
 hiddenNodes = 200
 outputNodes = 10
-learningRate = 0.2
+learningRate = 0.1
 
 n = neuralNetwork(inputNodes, hiddenNodes, outputNodes, learningRate)
 
-training_data_file = open("mnist_dataset/mnist_train.csv", 'r')
+#Train
+
+training_data_file = open("mnist_dataset/mnist_train_100.csv", 'r')
 training_data_list = training_data_file.readlines()
 training_data_file.close()
 
-epochs = 1
+all_values = training_data_list[1].split(',')
+print(all_values[0])
+image_array = numpy.asfarray(all_values[1:]).reshape((28, 28))
+matplotlib.pyplot.imshow(image_array, cmap='Greys', interpolation='None')
+matplotlib.pyplot.show()
 
-for e in range(epochs):
-	for record in training_data_list:
-		all_values = record.split(',')
-		inputs = (numpy.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01
-		targets = numpy.zeros(outputNodes) + 0.01
-		targets[int(all_values[0])] = 0.99
-		n.train(inputs, targets)
-		pass
-	pass
+# epochs = 1
+# i = 0
 
-test_data_file = open("mnist_dataset/mnist_test.csv", 'r')
-test_data_list = test_data_file.readlines()
-test_data_file.close()
+# for e in range(epochs):
+# 	for record in training_data_list:
+# 		# print(i / len(training_data_list))
+# 		all_values = record.split(',')
+# 		inputs = (numpy.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01
+# 		targets = numpy.zeros(outputNodes) + 0.01
+# 		targets[int(all_values[0])] = 0.99
+# 		n.train(inputs, targets)
+# 		i += 1
+# 		if (i % 1000 == 0):
+# 			print(i)
+# 		pass
+# 	pass
 
-scoreboard = []
+# print("done")
 
-for record in test_data_list:
-	all_values = record.split(',')
-	correct_label = int(all_values[0])
-	inputs = (numpy.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01
-	outputs = n.query(inputs)
-	label = numpy.argmax(outputs)
-	if (label == correct_label):
-		scoreboard.append(1)
-	else:
-		scoreboard.append(0)
-		pass
-	pass
+#Testing
 
-scorecard_array = numpy.asarray(scoreboard)
-print("Performance = ", scorecard_array.sum() / scorecard_array.size)
+# test_data_file = open("mnist_dataset/mnist_test.csv", 'r')
+# test_data_list = test_data_file.readlines()
+# test_data_file.close()
+
+# scoreboard = []
+
+# for record in test_data_list:
+# 	all_values = record.split(',')
+# 	correct_label = int(all_values[0])
+# 	inputs = (numpy.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01
+# 	outputs = n.query(inputs)
+# 	label = numpy.argmax(outputs)
+# 	if (label == correct_label):
+# 		scoreboard.append(1)
+# 	else:
+# 		scoreboard.append(0)
+# 		pass
+# 	pass
+
+# scorecard_array = numpy.asarray(scoreboard)
+# # print(scoreboard)
+# print("Performance = ", scorecard_array.sum() / scorecard_array.size)
 
