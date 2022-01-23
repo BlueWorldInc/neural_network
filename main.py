@@ -1,6 +1,6 @@
 import numpy
 import scipy.special
-import matplotlib.pyplot
+import matplotlib.pyplot as plt
 # %matplotlib inline
 
 # neural network class definition
@@ -54,24 +54,24 @@ class neuralNetwork:
 
 #Init
 
-inputNodes = 784
-hiddenNodes = 200
-outputNodes = 10
-learningRate = 0.1
+# inputNodes = 784
+# hiddenNodes = 200
+# outputNodes = 10
+# learningRate = 0.1
 
-n = neuralNetwork(inputNodes, hiddenNodes, outputNodes, learningRate)
+# n = neuralNetwork(inputNodes, hiddenNodes, outputNodes, learningRate)
 
-#Train
+# #Train
 
-training_data_file = open("mnist_dataset/mnist_train_100.csv", 'r')
-training_data_list = training_data_file.readlines()
-training_data_file.close()
+# training_data_file = open("mnist_dataset/mnist_train_100.csv", 'r')
+# training_data_list = training_data_file.readlines()
+# training_data_file.close()
 
-all_values = training_data_list[1].split(',')
-print(all_values[0])
-image_array = numpy.asfarray(all_values[1:]).reshape((28, 28))
-matplotlib.pyplot.imshow(image_array, cmap='Greys', interpolation='None')
-matplotlib.pyplot.show()
+# all_values = training_data_list[1].split(',')
+# print(all_values[0])
+# image_array = numpy.asfarray(all_values[1:]).reshape((28, 28))
+# plt.imshow(image_array, cmap='Greys', interpolation='None')
+# plt.show()
 
 # epochs = 1
 # i = 0
