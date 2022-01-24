@@ -36,36 +36,37 @@ training_data_file.close()
 # plt.imshow(image_array, cmap='Greys', interpolation='None')
 # plt.show()
 
-n.load("24-01-2022_22-01-22")
-
+n.load("24-01-2022_22-32-28")
+n.lr = 0.01
 # Train
 
-# epochs = 1
-# i = 0
+epochs = 1
+i = 0
 
-# for e in range(epochs):
-# 	for record in training_data_list:
-# 		# print(i / len(training_data_list))
-# 		all_values = record.split(',')
-# 		inputs = (numpy.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01
-# 		original_inputs = inputs
-# 		inputs_p10 = interpolate(inputs, 10)
-# 		targets = numpy.zeros(outputNodes) + 0.01
-# 		targets[int(all_values[0])] = 0.99
-# 		n.train(inputs_p10, targets)
-# 		inputs_m10 = interpolate(original_inputs, -10)
-# 		n.train(inputs_m10, targets)
-# 		i += 1
-# 		if (i % 1000 == 0):
-# 			print(i)
-# 			if (i == 5000):
-# 				break
-# 		pass
-# 	pass
+for e in range(epochs):
+	for record in training_data_list:
+		# print(i / len(training_data_list))
+		all_values = record.split(',')
+		inputs = (numpy.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01
+		original_inputs = inputs
+		targets = numpy.zeros(outputNodes) + 0.01
+		targets[int(all_values[0])] = 0.99
+		# inputs_p10 = interpolate(inputs, 5)
+		# n.train(inputs_p10, targets)
+		# inputs_m10 = interpolate(original_inputs, -5)
+		# n.train(inputs_m10, targets)
+		n.train(original_inputs, targets)
+		i += 1
+		if (i % 1000 == 0):
+			print(i)
+			# if (i == 5000):
+			# 	break
+		pass
+	pass
 
 print("done")
 # n.load("24-01-2022_21-11-00")
-# n.save()
+n.save()
 
 # Testing
 
