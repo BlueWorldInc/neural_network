@@ -1,5 +1,6 @@
 import numpy
 import sys
+from scipy import ndimage
 sys.dont_write_bytecode = True
 import matplotlib.pyplot as plt
 from neural_network import *
@@ -7,6 +8,10 @@ from matplotlib.backend_bases import MouseButton
 # %matplotlib inline
 
 numpy.set_printoptions(threshold=sys.maxsize)
+
+def interpolate(scaled_input, degree):
+	inputs_plus10_img = ndimage.interpolation.rotate(scaled_input.reshape(28,28), degree, cval=0.01, reshape=False)
+	return inputs_plus10_img.reshape(784)
 
 #Init
 
@@ -31,6 +36,8 @@ training_data_file.close()
 # plt.imshow(image_array, cmap='Greys', interpolation='None')
 # plt.show()
 
+n.load("24-01-2022_22-01-22")
+
 # Train
 
 # epochs = 1
@@ -41,48 +48,28 @@ training_data_file.close()
 # 		# print(i / len(training_data_list))
 # 		all_values = record.split(',')
 # 		inputs = (numpy.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01
+# 		original_inputs = inputs
+# 		inputs_p10 = interpolate(inputs, 10)
 # 		targets = numpy.zeros(outputNodes) + 0.01
 # 		targets[int(all_values[0])] = 0.99
-# 		n.train(inputs, targets)
+# 		n.train(inputs_p10, targets)
+# 		inputs_m10 = interpolate(original_inputs, -10)
+# 		n.train(inputs_m10, targets)
 # 		i += 1
 # 		if (i % 1000 == 0):
 # 			print(i)
+# 			if (i == 5000):
+# 				break
 # 		pass
 # 	pass
 
 print("done")
-n.load("24-01-2022_21-11-00")
+# n.load("24-01-2022_21-11-00")
+# n.save()
 
 # Testing
 
-test_data_file = open("mnist_dataset/mnist_test.csv", 'r')
-test_data_list = test_data_file.readlines()
-test_data_file.close()
-
-scoreboard = []
-wrong_records = [] 
-
-for record in test_data_list:
-	all_values = record.split(',')
-	correct_label = int(all_values[0])
-	inputs = (numpy.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01
-	outputs = n.query(inputs)
-	label = numpy.argmax(outputs)
-	if (label == correct_label):
-		scoreboard.append(1)
-	else:
-		scoreboard.append(0)
-		wrong_records.append([record, outputs])
-		# print(all_values[0])
-		# image_array = numpy.asfarray(all_values[1:]).reshape((28, 28))
-		# plt.imshow(image_array, cmap='Greys', interpolation='None')
-		# plt.show()
-		pass
-	pass
-
-scorecard_array = numpy.asarray(scoreboard)
-# print(scoreboard)
-print("Performance = ", scorecard_array.sum() / scorecard_array.size)
+n.test("mnist_dataset/mnist_test.csv")
 
 # # Showcase
 

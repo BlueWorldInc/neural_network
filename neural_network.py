@@ -68,3 +68,28 @@ class neuralNetwork:
 		final_outputs = self.activation_function(final_inputs)
 
 		return final_outputs
+
+	def test(self, test_data_file_path):
+		# "mnist_dataset/mnist_test.csv"
+		test_data_file = open(test_data_file_path, 'r')
+		test_data_list = test_data_file.readlines()
+		test_data_file.close()
+		scoreboard = []
+		wrong_records = [] 
+
+		for record in test_data_list:
+			all_values = record.split(',')
+			correct_label = int(all_values[0])
+			inputs = (numpy.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01
+			outputs = self.query(inputs)
+			label = numpy.argmax(outputs)
+			if (label == correct_label):
+				scoreboard.append(1)
+			else:
+				scoreboard.append(0)
+				wrong_records.append([record, outputs])
+				pass
+			pass
+
+		scorecard_array = numpy.asarray(scoreboard)
+		print("Performance = ", scorecard_array.sum() / scorecard_array.size)
