@@ -36,7 +36,7 @@ training_data_file.close()
 # plt.imshow(image_array, cmap='Greys', interpolation='None')
 # plt.show()
 
-n.load("24-01-2022_22-32-28")
+n.load("24-01-2022_22-47-26")
 n.lr = 0.01
 # Train
 
@@ -51,16 +51,16 @@ for e in range(epochs):
 		original_inputs = inputs
 		targets = numpy.zeros(outputNodes) + 0.01
 		targets[int(all_values[0])] = 0.99
-		# inputs_p10 = interpolate(inputs, 5)
-		# n.train(inputs_p10, targets)
-		# inputs_m10 = interpolate(original_inputs, -5)
-		# n.train(inputs_m10, targets)
-		n.train(original_inputs, targets)
+		inputs_p10 = interpolate(inputs, 5)
+		n.train(inputs_p10, targets)
+		inputs_m10 = interpolate(original_inputs, -5)
+		n.train(inputs_m10, targets)
+		# n.train(original_inputs, targets)
 		i += 1
 		if (i % 1000 == 0):
 			print(i)
 			# if (i == 5000):
-			# 	break
+				# break
 		pass
 	pass
 
